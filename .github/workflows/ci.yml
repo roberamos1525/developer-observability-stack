@@ -1,0 +1,61 @@
+# Local file only: this workflow has not been run on GitHub.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: gofmt
+        run: test -z "$(gofmt -l .)" || (gofmt -l . && exit 1)
+      - name: go vet
+        run: go vet ./...
+      - name: go mod tidy is clean
+        run: go mod tidy && git diff --exit-code go.mod go.sum
+
+  test:
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: build
+        run: go build ./... && go build -o bin/ ./cmd/obsd ./cmd/loadgen ./examples/webhook-receiver
+      - name: test
+        run: go test ./... -count=1 -timeout 10m
+      - name: test with race detector
+        if: runner.os == 'Linux'
+        run: go test ./... -race -count=1 -timeout 15m
+      - name: short fuzzing
+        if: runner.os == 'Linux'
+        run: |
+          go test ./internal/tsdb/chunk -run '^$' -fuzz FuzzRoundTrip -fuzztime 30s
+          go test ./internal/logs/query -run '^$' -fuzz FuzzParse -fuzztime 30s
+          go test ./internal/promql -run '^$' -fuzz FuzzParseAndEval -fuzztime 30s
+          go test ./internal/promtext -run '^$' -fuzz FuzzParse -fuzztime 30s
+          go test ./internal/logs -run '^$' -fuzz FuzzParsers -fuzztime 30s
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: build image
+        run: docker build -t developer-observability-stack:ci .

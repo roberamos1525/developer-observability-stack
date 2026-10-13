@@ -1,0 +1,43 @@
+# NOTE: not run locally (Docker is not available on the development machine).
+# Starts obsd, a synthetic Prometheus scrape target, and a webhook receiver
+# for alerts. `docker compose --profile load up` also runs the load generator.
+name: developer-observability-stack
+
+x-image: &image
+  build: .
+  image: developer-observability-stack:local
+
+services:
+  obsd:
+    <<: *image
+    environment:
+      OBS_API_KEYS: ${OBS_API_KEYS:-demo:change-me-demo-key:read+write+admin}
+      OBS_WEBHOOK_SECRET: ${OBS_WEBHOOK_SECRET:-change-me-webhook-secret}
+      OBS_CONFIG: /etc/obsd/obsd.json
+    volumes:
+      - obsd-data:/data
+      - ./examples/config/obsd.compose.json:/etc/obsd/obsd.json:ro
+    ports:
+      - "127.0.0.1:8428:8428"
+    restart: unless-stopped
+
+  synthetic-target:
+    <<: *image
+    entrypoint: ["/usr/local/bin/loadgen", "-serve-metrics", "0.0.0.0:9101"]
+
+  webhook-receiver:
+    <<: *image
+    entrypoint: ["/usr/local/bin/webhook-receiver", "-addr", "0.0.0.0:9095"]
+    environment:
+      WEBHOOK_SECRET: ${OBS_WEBHOOK_SECRET:-change-me-webhook-secret}
+
+  loadgen:
+    <<: *image
+    profiles: ["load"]
+    depends_on: [obsd]
+    entrypoint: ["/usr/local/bin/loadgen", "-url", "http://obsd:8428", "-duration", "60s", "-rate", "10"]
+    environment:
+      OBS_API_KEY: ${OBS_API_KEY:-change-me-demo-key}
+
+volumes:
+  obsd-data:
