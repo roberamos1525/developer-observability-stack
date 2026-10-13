@@ -1,0 +1,11 @@
+{
+  "name": "ErrorLogBurst",
+  "type": "log_count",
+  "query": "level:error | count by service",
+  "window": "10m",
+  "op": ">=",
+  "threshold": 10,
+  "labels": { "severity": "warning" },
+  "annotations": { "summary": "{{ $labels.service }} logged {{ $value }} errors in 10m" },
+  "channels": ["local-webhook", "log"]
+}

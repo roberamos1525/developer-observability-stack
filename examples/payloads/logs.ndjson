@@ -1,0 +1,4 @@
+{"timestamp":"2026-10-12T10:00:00.120Z","level":"info","message":"request completed","service":"checkout","route":"/api/orders","status":200,"latency_ms":41.2}
+{"timestamp":"2026-10-12T10:00:01.004Z","level":"warning","message":"slow query detected on table orders","service":"checkout","db":{"system":"postgresql","duration_ms":812}}
+{"timestamp":"2026-10-12T10:00:02.517Z","level":"ERROR","message":"connection refused by upstream payments-7","service":"checkout","status":502,"trace_id":"5b8efff798038103d269b633813fc60c"}
+{"ts":1791799203,"msg":"payment authorised for order 42","service":"payments","amount":99.5}

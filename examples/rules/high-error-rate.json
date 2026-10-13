@@ -1,0 +1,13 @@
+{
+  "name": "HighErrorRate",
+  "type": "metric",
+  "expr": "sum by (service) (rate(http_requests_total{code=~\"5..\"}[5m])) / sum by (service) (rate(http_requests_total[5m])) > 0.05",
+  "for": "2m",
+  "labels": { "severity": "page" },
+  "annotations": {
+    "summary": "{{ $labels.service }} error ratio is {{ $value }}",
+    "runbook": "docs/operations.md#alerting"
+  },
+  "channels": ["local-webhook", "log"],
+  "group_by": ["alertname", "service"]
+}

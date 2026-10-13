@@ -1,0 +1,4 @@
+<165>1 2026-10-12T10:00:03.003Z web-1 nginx 812 ACCESS [req@32473 path="/checkout" status="499"] client closed request
+<11>1 2026-10-12T10:00:04Z db-1 postgres 77 - - could not serialize access due to concurrent update
+<14>Oct 12 10:00:05 batch-1 cron[4411]: nightly export finished in 912s
+plain line without a syslog header is stored at receive time

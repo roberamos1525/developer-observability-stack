@@ -1,0 +1,51 @@
+{
+  "listen_addr": "127.0.0.1:8428",
+  "data_dir": "./var/data",
+  "log_level": "info",
+  "log_format": "text",
+  "auth": {
+    "enabled": true,
+    "default_tenant": "default"
+  },
+  "ingest": {
+    "workers": 4,
+    "queue_capacity": 1024,
+    "batch_size": 2000,
+    "flush_interval": "100ms",
+    "submit_timeout": "250ms"
+  },
+  "logs": {
+    "partition_duration": "1h",
+    "retention": "7d"
+  },
+  "metrics": {
+    "block_duration": "2h",
+    "raw_retention": "15d",
+    "downsample_resolution": "5m",
+    "downsample_after": "24h",
+    "downsampled_retention": "90d",
+    "scrape": {
+      "interval": "5s",
+      "timeout": "2s",
+      "targets": [
+        { "tenant": "demo", "job": "synthetic-worker", "url": "http://127.0.0.1:9101/metrics", "labels": { "env": "local" } }
+      ]
+    }
+  },
+  "traces": {
+    "retention": "3d"
+  },
+  "alerting": {
+    "evaluation_interval": "2s",
+    "group_wait": "0s",
+    "group_interval": "10s",
+    "repeat_interval": "1h",
+    "channels": [
+      { "name": "log", "type": "log" },
+      { "name": "local-webhook", "type": "webhook", "url": "http://127.0.0.1:9095/alerts", "secret_env": "OBS_WEBHOOK_SECRET", "max_retries": 3 }
+    ]
+  },
+  "retention": {
+    "interval": "1m"
+  }
+}

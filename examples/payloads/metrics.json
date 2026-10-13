@@ -1,0 +1,9 @@
+{
+  "samples": [
+    { "name": "http_requests_total", "labels": { "service": "checkout", "code": "200" }, "value": 1024 },
+    { "name": "http_requests_total", "labels": { "service": "checkout", "code": "500" }, "value": 7 },
+    { "name": "queue_depth", "labels": { "service": "payments" }, "value": 12 },
+    { "labels": { "__name__": "build_info", "version": "1.4.2" }, "value": 1 },
+    { "name": "temperature_celsius", "labels": { "room": "lab" }, "value": "NaN" }
+  ]
+}

@@ -1,0 +1,12 @@
+# HELP batch_jobs_processed_total Jobs processed by the batch worker.
+# TYPE batch_jobs_processed_total counter
+batch_jobs_processed_total{queue="default"} 1532
+batch_jobs_processed_total{queue="priority"} 88
+# HELP batch_job_duration_seconds Job duration.
+# TYPE batch_job_duration_seconds histogram
+batch_job_duration_seconds_bucket{le="0.5"} 120
+batch_job_duration_seconds_bucket{le="1"} 700
+batch_job_duration_seconds_bucket{le="5"} 1500
+batch_job_duration_seconds_bucket{le="+Inf"} 1620
+batch_job_duration_seconds_sum 2410.5
+batch_job_duration_seconds_count 1620

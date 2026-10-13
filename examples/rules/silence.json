@@ -1,0 +1,9 @@
+{
+  "matchers": [
+    { "name": "alertname", "value": "ErrorLogBurst" },
+    { "name": "service", "value": "pay.*", "isRegex": true }
+  ],
+  "endsAt": "2030-01-01T00:00:00Z",
+  "createdBy": "oncall@example.com",
+  "comment": "payments maintenance window"
+}
