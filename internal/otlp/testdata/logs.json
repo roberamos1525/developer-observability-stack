@@ -1,0 +1,38 @@
+{
+  "resourceLogs": [
+    {
+      "resource": {
+        "attributes": [
+          { "key": "service.name", "value": { "stringValue": "checkout" } },
+          { "key": "host.name", "value": { "stringValue": "node-7" } }
+        ]
+      },
+      "scopeLogs": [
+        {
+          "scope": { "name": "com.example.checkout.logger" },
+          "logRecords": [
+            {
+              "timeUnixNano": "1735689600050000000",
+              "observedTimeUnixNano": "1735689600051000000",
+              "severityNumber": 17,
+              "severityText": "ERROR",
+              "traceId": "5b8efff798038103d269b633813fc60c",
+              "spanId": "bbb19b7ec3c1b174",
+              "body": { "stringValue": "payment declined for order 42" },
+              "attributes": [
+                { "key": "order.id", "value": { "intValue": "42" } },
+                { "key": "payment.provider", "value": { "stringValue": "acme-pay" } }
+              ]
+            },
+            {
+              "observedTimeUnixNano": "1735689601000000000",
+              "severityNumber": 9,
+              "body": { "kvlistValue": { "values": [ { "key": "event", "value": { "stringValue": "cart.updated" } } ] } },
+              "attributes": [ { "key": "http route", "value": { "stringValue": "/cart" } } ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

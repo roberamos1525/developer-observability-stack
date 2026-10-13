@@ -1,0 +1,85 @@
+{
+  "resourceMetrics": [
+    {
+      "resource": {
+        "attributes": [
+          { "key": "service.name", "value": { "stringValue": "checkout" } },
+          { "key": "service.instance.id", "value": { "stringValue": "checkout-7f9c" } }
+        ]
+      },
+      "scopeMetrics": [
+        {
+          "scope": { "name": "io.opentelemetry.runtime", "version": "1.0.0" },
+          "metrics": [
+            {
+              "name": "http.server.requests",
+              "unit": "1",
+              "sum": {
+                "aggregationTemporality": 2,
+                "isMonotonic": true,
+                "dataPoints": [
+                  {
+                    "attributes": [ { "key": "http.route", "value": { "stringValue": "/checkout" } } ],
+                    "startTimeUnixNano": "1735689000000000000",
+                    "timeUnixNano": "1735689600000000000",
+                    "asInt": "1250"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "process.memory.usage",
+              "unit": "By",
+              "gauge": {
+                "dataPoints": [ { "timeUnixNano": "1735689600000000000", "asDouble": 52428800.0 } ]
+              }
+            },
+            {
+              "name": "http.server.duration",
+              "unit": "ms",
+              "histogram": {
+                "aggregationTemporality": 2,
+                "dataPoints": [
+                  {
+                    "attributes": [ { "key": "http.route", "value": { "stringValue": "/checkout" } } ],
+                    "startTimeUnixNano": "1735689000000000000",
+                    "timeUnixNano": "1735689600000000000",
+                    "count": "10",
+                    "sum": 1234.5,
+                    "bucketCounts": [ "2", "5", "2", "1" ],
+                    "explicitBounds": [ 50, 100, 250 ]
+                  }
+                ]
+              }
+            },
+            {
+              "name": "rpc.latency",
+              "summary": {
+                "dataPoints": [
+                  {
+                    "timeUnixNano": "1735689600000000000",
+                    "count": "4",
+                    "sum": 10.0,
+                    "quantileValues": [ { "quantile": 0.5, "value": 2.0 }, { "quantile": 0.99, "value": "Infinity" } ]
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jobs.processed",
+              "sum": {
+                "aggregationTemporality": 1,
+                "isMonotonic": true,
+                "dataPoints": [ { "timeUnixNano": "1735689600000000000", "asInt": "3" } ]
+              }
+            },
+            {
+              "name": "request.size",
+              "exponentialHistogram": { "aggregationTemporality": 2, "dataPoints": [] }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "resourceSpans": [
+    {
+      "resource": {
+        "attributes": [
+          { "key": "service.name", "value": { "stringValue": "frontend" } },
+          { "key": "service.version", "value": { "stringValue": "1.4.2" } },
+          { "key": "deployment.environment", "value": { "stringValue": "staging" } }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": { "name": "io.opentelemetry.contrib.http", "version": "0.45.0" },
+          "spans": [
+            {
+              "traceId": "5B8EFFF798038103D269B633813FC60C",
+              "spanId": "EEE19B7EC3C1B174",
+              "name": "GET /checkout",
+              "kind": 2,
+              "startTimeUnixNano": "1735689600000000000",
+              "endTimeUnixNano": "1735689600250000000",
+              "attributes": [
+                { "key": "http.request.method", "value": { "stringValue": "GET" } },
+                { "key": "http.response.status_code", "value": { "intValue": "200" } },
+                { "key": "user.premium", "value": { "boolValue": true } },
+                { "key": "cart.items", "value": { "arrayValue": { "values": [ { "stringValue": "sku-1" }, { "stringValue": "sku-2" } ] } } }
+              ],
+              "events": [
+                {
+                  "timeUnixNano": "1735689600010000000",
+                  "name": "cache.miss",
+                  "attributes": [ { "key": "cache.key", "value": { "stringValue": "cart:42" } } ]
+                }
+              ],
+              "status": { "code": 1 }
+            },
+            {
+              "traceId": "5b8efff798038103d269b633813fc60c",
+              "spanId": "aaa19b7ec3c1b174",
+              "parentSpanId": "eee19b7ec3c1b174",
+              "name": "POST checkout-api",
+              "kind": 3,
+              "startTimeUnixNano": "1735689600020000000",
+              "endTimeUnixNano": "1735689600230000000",
+              "attributes": [ { "key": "peer.service", "value": { "stringValue": "checkout" } } ],
+              "status": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [ { "key": "service.name", "value": { "stringValue": "checkout" } } ]
+      },
+      "scopeSpans": [
+        {
+          "scope": { "name": "checkout-instrumentation" },
+          "spans": [
+            {
+              "traceId": "5b8efff798038103d269b633813fc60c",
+              "spanId": "bbb19b7ec3c1b174",
+              "parentSpanId": "aaa19b7ec3c1b174",
+              "name": "ProcessOrder",
+              "kind": 2,
+              "startTimeUnixNano": "1735689600030000000",
+              "endTimeUnixNano": "1735689600220000000",
+              "attributes": [
+                { "key": "order.total", "value": { "doubleValue": 99.5 } },
+                { "key": "payload", "value": { "bytesValue": "aGVsbG8=" } },
+                { "key": "meta", "value": { "kvlistValue": { "values": [ { "key": "region", "value": { "stringValue": "eu" } } ] } } }
+              ],
+              "status": { "code": 2, "message": "payment declined" }
+            },
+            {
+              "traceId": "5b8efff798038103d269b633813fc60c",
+              "spanId": "ccc19b7ec3c1b174",
+              "parentSpanId": "bbb19b7ec3c1b174",
+              "name": "SELECT orders",
+              "kind": 3,
+              "startTimeUnixNano": "1735689600040000000",
+              "endTimeUnixNano": "1735689600090000000",
+              "attributes": [
+                { "key": "db.system", "value": { "stringValue": "postgresql" } },
+                { "key": "peer.service", "value": { "stringValue": "postgres" } }
+              ],
+              "status": {}
+            },
+            {
+              "traceId": "00000000000000000000000000000000",
+              "spanId": "ddd19b7ec3c1b174",
+              "name": "invalid zero trace id",
+              "kind": 1,
+              "startTimeUnixNano": "1735689600040000000",
+              "endTimeUnixNano": "1735689600090000000"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
