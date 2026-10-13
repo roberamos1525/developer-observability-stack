@@ -1,0 +1,24 @@
+# Build output
+/bin/
+/dist/
+*.exe
+*.test
+*.out
+coverage.*
+
+# Runtime state (log segments, TSDB blocks/WAL, span files, alert state)
+/var/
+
+# Go fuzzing corpus written locally by failing fuzz runs
+testdata/fuzz/
+
+# Local configuration and secrets
+.env
+*.local.env
+
+# Editors / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
